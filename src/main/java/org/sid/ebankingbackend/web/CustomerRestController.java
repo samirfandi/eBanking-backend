@@ -6,18 +6,21 @@ import org.sid.ebankingbackend.dtos.CustomerDTO;
 import org.sid.ebankingbackend.entities.Customer;
 import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
 import org.sid.ebankingbackend.services.BankAccountService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController 
+@CrossOrigin ("*")
 @Slf4j @AllArgsConstructor 
 public class CustomerRestController {
 
@@ -28,6 +31,13 @@ public class CustomerRestController {
     public List<CustomerDTO> customers(){
         
         List<CustomerDTO> list = bankAccountService.listCustomers();
+        return list;
+    }
+
+    @GetMapping ("customers/search")
+    public List<CustomerDTO> searchCustomers(@RequestParam (name = "keyword", defaultValue = "") String key){
+        
+        List<CustomerDTO> list = bankAccountService.searchCustomers("%" + key + "%");
         return list;
     }
 
