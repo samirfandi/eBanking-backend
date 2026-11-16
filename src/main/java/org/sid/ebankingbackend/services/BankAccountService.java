@@ -10,6 +10,7 @@ import org.sid.ebankingbackend.dtos.OperationDTO;
 import org.sid.ebankingbackend.dtos.SavingAccountDTO;
 import org.sid.ebankingbackend.entities.BankAccount;
 import org.sid.ebankingbackend.entities.CurrentAccount;
+import org.sid.ebankingbackend.entities.Customer;
 import org.sid.ebankingbackend.entities.SavingAccount;
 import org.sid.ebankingbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankingbackend.exceptions.BankAccountNotFoundException;
@@ -39,6 +40,7 @@ public interface BankAccountService {
     void deleteCustomer(Long customerId);
     List<OperationDTO> accountHistory(String accountId);
     AccountHistoryDTO accountHistoryPage(String accountId, int page, int size)throws BankAccountNotFoundException;
+    List<CustomerDTO> searchCustomers(String key);
 
 
 }
