@@ -222,9 +222,15 @@ public class BankAccountServiceImp implements BankAccountService{
     @Override
     public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException {
        
-        debit(accountIdSource, amount, "Transfer to "+accountIdDestination);
+        BankAccount s = bankAccountRepository.findById(accountIdSource).orElse(null);
+        String source = s.getCustomer().getName();
 
-        credit(accountIdDestination, amount, "Transfer from "+accountIdDestination);
+        BankAccount d = bankAccountRepository.findById(accountIdDestination).orElse(null);
+        String dest = d.getCustomer().getName();
+
+        debit(accountIdSource, amount, "Transfer to "+ dest);
+
+        credit(accountIdDestination, amount, "Transfer from "+ source);
     }
 
 
@@ -278,7 +284,7 @@ public class BankAccountServiceImp implements BankAccountService{
     @Override
     public AccountHistoryDTO accountHistoryPage(String accountId, int page, int size) throws BankAccountNotFoundException{
         
-        Page<Operation> operations = accountOperationRepository.findByBankAccountId(accountId, PageRequest.of(page, size));
+        Page<Operation> operations = accountOperationRepository.findByBankAccountIdOrderByOperationDateDesc(accountId, PageRequest.of(page, size));
 
         AccountHistoryDTO accountHistoryDTO =new AccountHistoryDTO();
 

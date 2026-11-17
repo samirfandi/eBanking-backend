@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AccountOperationRepository extends JpaRepository<Operation, Long>{
 
    public List<Operation> findByBankAccountId(String accountId);
-   public Page<Operation> findByBankAccountId(String accountId, Pageable pageable); 
+   public Page<Operation> findByBankAccountIdOrderByOperationDateDesc(String accountId, Pageable pageable); 
 
 }
