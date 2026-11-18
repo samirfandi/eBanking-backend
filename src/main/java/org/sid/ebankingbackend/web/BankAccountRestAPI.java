@@ -95,6 +95,14 @@ public class BankAccountRestAPI {
 
     }
 
+    @GetMapping ("/accounts/customer/{customerId}")
+    public List<BankAccountDTO> customerAccounts(@PathVariable (name = "customerId") String customerId){
+
+        List<BankAccountDTO> res = bankAccountServiceImp.bankAccountListByCustomerId(customerId);
+        return  res;
+
+    }
+
 
 
 
