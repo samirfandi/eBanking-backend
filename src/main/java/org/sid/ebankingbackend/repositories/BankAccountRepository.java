@@ -1,5 +1,6 @@
 package org.sid.ebankingbackend.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.sid.ebankingbackend.entities.BankAccount;
@@ -9,5 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BankAccountRepository extends JpaRepository<BankAccount, String> {
 
     //public BankAccount findById(String id) ;
+
+    List<BankAccount> findByCustomerId(String customerId);
+    
     
 }
