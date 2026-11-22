@@ -8,9 +8,12 @@ import org.sid.ebankingbackend.dtos.BankAccountDTO;
 import org.sid.ebankingbackend.dtos.CreditDTO;
 import org.sid.ebankingbackend.dtos.DebitDTO;
 import org.sid.ebankingbackend.dtos.OperationDTO;
+import org.sid.ebankingbackend.dtos.SavingAccountDTO;
 import org.sid.ebankingbackend.dtos.TransferDTO;
+import org.sid.ebankingbackend.dtos.postRequest.SavingAccountRequestDTO;
 import org.sid.ebankingbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankingbackend.exceptions.BankAccountNotFoundException;
+import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
 import org.sid.ebankingbackend.services.BankAccountService;
 import org.sid.ebankingbackend.services.BankAccountServiceImp;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -100,6 +103,17 @@ public class BankAccountRestAPI {
 
         List<BankAccountDTO> res = bankAccountServiceImp.bankAccountListByCustomerId(customerId);
         return  res;
+
+    }
+
+
+    @PostMapping ("/accounts/addSavingAccount")
+    public SavingAccountDTO addSavingAccount(@RequestBody SavingAccountRequestDTO body) throws CustomerNotFoundException{
+
+        double initialBalance = body.getInitialBalance();
+        Long customerId = body.getCustomerId();
+
+        return bankAccountServiceImp.saveSavingAccount(initialBalance,0, customerId);
 
     }
 
