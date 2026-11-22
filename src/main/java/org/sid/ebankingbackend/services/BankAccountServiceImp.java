@@ -139,7 +139,7 @@ public class BankAccountServiceImp implements BankAccountService{
         account.setCreatedAt(new Date());
         account.setCustomer(customer);
         account.setId(UUID.randomUUID().toString());
-        account.setInterestRate(interestRate);
+        account.setInterestRate(Math.random()*40);
         account.setStatus(AccountStatus.CREATED);
 
         SavingAccount resultAccount = bankAccountRepository.save(account);
