@@ -20,6 +20,7 @@ public interface BankAccountService {
 
     
     CurrentAccountDTO saveCurrentAccount(double initialBalance, double overDraft , Long customerId) throws CustomerNotFoundException;
+
     SavingAccountDTO saveSavingAccount(double initialBalance, double interestRate , Long customerId)throws CustomerNotFoundException;
 
     List<CustomerDTO> listCustomers();
@@ -42,6 +43,9 @@ public interface BankAccountService {
     AccountHistoryDTO accountHistoryPage(String accountId, int page, int size)throws BankAccountNotFoundException;
     List<CustomerDTO> searchCustomers(String key);
     List<BankAccountDTO> bankAccountListByCustomerId(String accountId);
+    CurrentAccountDTO saveCurrentAccountR(double initialBalance, double overDraft, Long customerId)
+            throws CustomerNotFoundException;
 
+     void deleteAccount(String accountId);
 
 }
