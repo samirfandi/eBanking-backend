@@ -6,10 +6,12 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import org.sid.ebankingbackend.dtos.AccountHistoryDTO;
 import org.sid.ebankingbackend.dtos.BankAccountDTO;
 import org.sid.ebankingbackend.dtos.CreditDTO;
+import org.sid.ebankingbackend.dtos.CurrentAccountDTO;
 import org.sid.ebankingbackend.dtos.DebitDTO;
 import org.sid.ebankingbackend.dtos.OperationDTO;
 import org.sid.ebankingbackend.dtos.SavingAccountDTO;
 import org.sid.ebankingbackend.dtos.TransferDTO;
+import org.sid.ebankingbackend.dtos.postRequest.CurrentAccountRequestDTO;
 import org.sid.ebankingbackend.dtos.postRequest.SavingAccountRequestDTO;
 import org.sid.ebankingbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankingbackend.exceptions.BankAccountNotFoundException;
@@ -17,6 +19,7 @@ import org.sid.ebankingbackend.exceptions.CustomerNotFoundException;
 import org.sid.ebankingbackend.services.BankAccountService;
 import org.sid.ebankingbackend.services.BankAccountServiceImp;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -115,6 +118,24 @@ public class BankAccountRestAPI {
 
         return bankAccountServiceImp.saveSavingAccount(initialBalance,0, customerId);
 
+    }
+
+    @PostMapping ("/accounts/addCurrentAccount")
+    public CurrentAccountDTO addCurrentAccount(@RequestBody CurrentAccountRequestDTO body) throws CustomerNotFoundException{
+
+        double initialBalance = body.getInitialBalance();
+        Long customerId = body.getCustomerId();
+        double overDraft = body.getOverDraft();
+
+        return bankAccountServiceImp.saveCurrentAccountR(initialBalance,overDraft, customerId);
+
+    }
+
+    @DeleteMapping ("/accounts/{id}")
+    public void deleteCustomer(@PathVariable (name = "id")String id){
+
+        bankAccountServiceImp.deleteAccount(id);
+        
     }
 
 
