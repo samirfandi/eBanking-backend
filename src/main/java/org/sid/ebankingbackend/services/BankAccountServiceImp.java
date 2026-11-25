@@ -147,7 +147,35 @@ public class BankAccountServiceImp implements BankAccountService{
         SavingAccountDTO res = bankAccountMapperImp.fromSavingAccount(resultAccount);
 
         return res;
-    }    
+    }
+    
+
+    @Override 
+    public CurrentAccountDTO saveCurrentAccountR(double initialBalance, double overDraft, Long customerId)
+            throws CustomerNotFoundException {
+       
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+
+        if (customer == null) throw new CustomerNotFoundException("Customer Not Found");
+
+        CurrentAccount account = new CurrentAccount();
+
+        account.setBalance(initialBalance);
+        account.setCreatedAt(new Date());
+        account.setCustomer(customer);
+        account.setId(UUID.randomUUID().toString());
+        account.setOverDraft(overDraft);
+        account.setStatus(AccountStatus.CREATED);
+
+        CurrentAccount resultAccount = bankAccountRepository.save(account);
+
+        CurrentAccountDTO res = bankAccountMapperImp.fromCurrentAccount(resultAccount);
+
+        return res;
+    }
+    
+    
+    
 
     @Override
     public List<CustomerDTO> listCustomers() {
@@ -325,7 +353,17 @@ public class BankAccountServiceImp implements BankAccountService{
         return accountHistoryDTO;
 
 
+    }
+
+
+
+    @Override
+    public void deleteAccount(String accountId) {
+        bankAccountRepository.deleteById(accountId);
     } 
+
+
+
 
 
 
